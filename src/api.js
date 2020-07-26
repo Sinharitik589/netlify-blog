@@ -4,6 +4,11 @@ const Serverless = require("serverless-http");
 const app = express();
 
 const router = express.Router();
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+
+  next();
+});
 
 router.get("/", (req, res) => {
   res.json({
