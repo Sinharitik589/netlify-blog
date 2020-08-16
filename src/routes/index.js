@@ -73,8 +73,8 @@ module.exports = (router, app) => {
   router.get("/", async (req, res) => {
     let blog = await Blog.find({});
     let arr = await blog.map((item) => {
-      const { heading, description, category } = item;
-      let array = { heading, description, category };
+      const { heading, description, category, imageUrl } = item;
+      let array = { heading, description, category, imageUrl };
       return array;
     });
     res.json(arr);
