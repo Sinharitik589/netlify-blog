@@ -1,37 +1,26 @@
+require("dotenv").config({ path: "/self/blog-backend/src/routes/.env" });
 const express = require("express");
+const cors = require("cors");
 const Serverless = require("serverless-http");
-
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 const app = express();
+app.use(bodyParser.json());
+const uri =
+  "mongodb+srv://sinharitik589:DbpX8lVDiZvMJmTC@cluster0.5zdkf.mongodb.net/blog?retryWrites=true&w=majority";
+mongoose.connect(uri, { useNewUrlParser: true }).catch((error) => {
+  console.log(error, "error in mongoose");
+});
 
 const router = express.Router();
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+require("./mongo/index");
+require("./routes/index")(router, app);
 
-  next();
-});
-
-router.get("/", (req, res) => {
-  res.json(
-    {
-      title: "Title1",
-      name: "Movie1",
-      disclaimer:
-        "Do anim laboris cillum consectetur sit. Qui Lorem tempor duis aliqua ex dolor officia amet elit dolore veniam. Labore magna commodo enim irure in eiusmod veniam tempor magna. Veniam velit amet dolor voluptate cillum id laborum nisi tempor.",
-    },
-    {
-      title: "Title2",
-      name: "Movie2",
-      disclaimer:
-        "Do anim laboris cillum consectetur sit. Qui Lorem tempor duis aliqua ex dolor officia amet elit dolore veniam. Labore magna commodo enim irure in eiusmod veniam tempor magna. Veniam velit amet dolor voluptate cillum id laborum nisi tempor.",
-    },
-    {
-      title: "Title3",
-      name: "Movie3",
-      disclaimer:
-        "Do anim laboris cillum consectetur sit. Qui Lorem tempor duis aliqua ex dolor officia amet elit dolore veniam. Labore magna commodo enim irure in eiusmod veniam tempor magna. Veniam velit amet dolor voluptate cillum id laborum nisi tempor.",
-    }
-  );
-});
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 app.use("/.netlify/functions/api", router);
 

@@ -1,0 +1,17 @@
+
+
+GET  http://localhost:9000/.netlify/functions/api/user
+
+###
+POST   http://localhost:9000/.netlify/functions/api/login
+
+Content-Type: application/json
+{
+
+ "user":"Ritik",
+ "password":"Sinharitik589"
+ 
+     
+
+}
+
