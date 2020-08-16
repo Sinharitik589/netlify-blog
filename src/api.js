@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "/self/blog-backend/src/routes/.env" });
+require("dotenv").config({ path: "/self/blog-backend/.env" });
 const express = require("express");
 const cors = require("cors");
 const Serverless = require("serverless-http");
