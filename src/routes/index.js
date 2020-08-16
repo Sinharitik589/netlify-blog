@@ -98,6 +98,7 @@ module.exports = (router, app) => {
     } = req.body;
 
     new Blog({
+      username: req.user.user.username,
       category,
       heading,
       imageUrl,
