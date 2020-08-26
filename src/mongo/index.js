@@ -26,5 +26,9 @@ const authSchema = new Schema({
   password: String,
 });
 
+const featuredSchema = new Schema({
+  featured: Array,
+});
 mongoose.model("blog", blogSchema);
 mongoose.model("user", authSchema);
+mongoose.model("featured", featuredSchema);

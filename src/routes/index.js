@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Blog = mongoose.model("blog");
 const User = mongoose.model("user");
+const Feature = mongoose.model("featured");
 
 module.exports = (router, app) => {
   // Middleware for authenticating user
@@ -77,12 +78,93 @@ module.exports = (router, app) => {
       let array = { heading, description, category, imageUrl };
       return array;
     });
+    console.log(blog, "blog");
     res.json(arr);
   });
 
   router.get("/blog", async (req, res) => {
     let blog = await Blog.find({ heading: `${req.query["heading"]}` });
     res.json(blog);
+  });
+  router.put("/blog", authenticateUser, async (req, res) => {
+    const {
+      category,
+      heading,
+      imageUrl,
+      description,
+      subheading,
+      tags,
+      questions,
+      urls,
+    } = req.body;
+    Blog.updateOne(
+      { heading: `${req.query["blog"]}` },
+      {
+        category,
+        heading,
+        imageUrl,
+        description,
+        subheading,
+        tags,
+        questions,
+        urls,
+      },
+      (err) => {
+        if (err == null) {
+          res.sendStatus(200);
+        } else {
+          res.sendStatus(404);
+        }
+      }
+    );
+  });
+  router.get("/delete", authenticateUser, (req, res) => {
+    Blog.deleteOne({ heading: `${req.query["blog"]}` }, (err) => {
+      console.log("err", err);
+      console.log(req.query["blog"]);
+    });
+
+    res.sendStatus(200);
+  });
+
+  router.post("/featured", authenticateUser, async (req, res) => {
+    const { featured } = req.body;
+
+    const feature = await Feature.find({});
+    console.log(feature, "feeee");
+    if (feature.length == 0) {
+      new Feature({
+        featured,
+      })
+        .save()
+        .then(() => {
+          res.sendStatus(200);
+          console.log("created");
+        })
+        .catch((err) => {
+          res.sendStatus(404);
+          console.log(err);
+        });
+    } else {
+      Feature.updateOne({}, { featured }, (err) => {
+        if (err == null) {
+          res.sendStatus(200);
+        } else {
+          res.sendStatus(404);
+        }
+      });
+    }
+  });
+
+  router.get("/featured", async (req, res) => {
+    let featured = await Feature.find({}).exec();
+
+    if (featured) {
+      let object = { featured: featured[0].featured };
+      res.json(object);
+    } else {
+      res.sendStatus(404);
+    }
   });
 
   router.post("/input", authenticateUser, (req, res) => {
