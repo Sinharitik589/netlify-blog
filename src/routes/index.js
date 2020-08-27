@@ -111,6 +111,7 @@ module.exports = (router, app) => {
       },
       (err) => {
         if (err == null) {
+          console.log(questions, subheading);
           res.sendStatus(200);
         } else {
           res.sendStatus(404);
