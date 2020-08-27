@@ -16,6 +16,10 @@ const router = express.Router();
 require("./mongo/index");
 require("./routes/index")(router, app);
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 app.use(
   cors({
     origin: "*",
