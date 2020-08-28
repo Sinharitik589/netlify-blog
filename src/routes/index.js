@@ -76,13 +76,13 @@ module.exports = (router, app) => {
       if (err) {
         res.sendStatus(500);
       } else {
-        blog = docs;
+        let arr = docs.map((item) => {
+          const { heading, description, category, imageUrl } = item;
+          let array = { heading, description, category, imageUrl };
+          return array;
+        });
+        res.json(arr);
       }
-    });
-    let arr = await blog.map((item) => {
-      const { heading, description, category, imageUrl } = item;
-      let array = { heading, description, category, imageUrl };
-      return array;
     });
 
     res.json(arr);
