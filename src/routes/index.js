@@ -78,7 +78,7 @@ module.exports = (router, app) => {
         res.sendStatus(500);
       } else {
         var arr = docs.map((item) => {
-          const { heading, description, category, imageUrl } = item;
+          const { heading, description, category, imageUrl, createdAt } = item;
           let array = {
             heading,
             description,
