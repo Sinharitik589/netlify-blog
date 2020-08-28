@@ -72,19 +72,31 @@ module.exports = (router, app) => {
 
   //Route for content
   router.get("/", async (req, res) => {
-    let blog = await Blog.find({});
+    Blog.find({}, (err, docs) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        blog = docs;
+      }
+    });
     let arr = await blog.map((item) => {
       const { heading, description, category, imageUrl } = item;
       let array = { heading, description, category, imageUrl };
       return array;
     });
-    console.log(blog, "blog");
+
     res.json(arr);
   });
 
-  router.get("/blog", async (req, res) => {
-    let blog = await Blog.find({ heading: `${req.query["heading"]}` });
-    res.json(blog);
+  router.get("/blog", (req, res) => {
+    Blog.find({ heading: `${req.query["heading"]}` }, (err, docs) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        console.log(docs, "docs");
+        res.json(docs);
+      }
+    });
   });
   router.put("/blog", authenticateUser, async (req, res) => {
     const {
@@ -120,19 +132,22 @@ module.exports = (router, app) => {
     );
   });
   router.get("/delete", authenticateUser, (req, res) => {
-    Blog.deleteOne({ heading: `${req.query["blog"]}` }, (err) => {
-      console.log("err", err);
-      console.log(req.query["blog"]);
+    Blog.deleteOne({ heading: `${req.query["blog"]}` }, (err, docs) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(404);
+      } else {
+        console.log(docs);
+        res.sendStatus(200);
+      }
     });
-
-    res.sendStatus(200);
   });
 
   router.post("/featured", authenticateUser, async (req, res) => {
     const { featured } = req.body;
 
     const feature = await Feature.find({});
-    console.log(feature, "feeee");
+
     if (feature.length == 0) {
       new Feature({
         featured,
@@ -158,14 +173,15 @@ module.exports = (router, app) => {
   });
 
   router.get("/featured", async (req, res) => {
-    let featured = await Feature.find({}).exec();
-
-    if (featured) {
-      let object = { featured: featured[0].featured };
-      res.json(object);
-    } else {
-      res.sendStatus(404);
-    }
+    Feature.find({}, (err, docs) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        featured = docs;
+        let object = { featured: featured[0].featured };
+        res.json(object);
+      }
+    });
   });
 
   router.post("/input", authenticateUser, (req, res) => {
