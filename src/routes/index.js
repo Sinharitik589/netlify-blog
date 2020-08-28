@@ -76,17 +76,15 @@ module.exports = (router, app) => {
       if (err) {
         res.sendStatus(500);
       } else {
-        let arr = docs.map((item) => {
+        var arr = docs.map((item) => {
           const { heading, description, category, imageUrl } = item;
           let array = { heading, description, category, imageUrl };
           return array;
         });
-        console.log(arr, "arrayyu");
+        console.log(arr);
         res.json(arr);
       }
     });
-
-    res.json(arr);
   });
 
   router.get("/blog", (req, res) => {
