@@ -4,7 +4,11 @@ const cors = require("cors");
 const Serverless = require("serverless-http");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+var timeout = require("connect-timeout");
+
 const app = express();
+
+app.use(timeout("20s"));
 app.use(bodyParser.json());
 const uri =
   "mongodb+srv://sinharitik589:DbpX8lVDiZvMJmTC@cluster0.5zdkf.mongodb.net/blog?retryWrites=true&w=majority";
