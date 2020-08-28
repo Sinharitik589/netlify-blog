@@ -73,12 +73,20 @@ module.exports = (router, app) => {
 
   //Route for content
   router.get("/", async (req, res) => {
+    console.log(req);
     Blog.find({}, (err, docs) => {
       if (err) {
         res.sendStatus(500);
       } else {
         var arr = docs.map((item) => {
-          const { heading, description, category, imageUrl, createdAt } = item;
+          const {
+            heading,
+            description,
+            category,
+            imageUrl,
+            createdAt,
+            username,
+          } = item;
           let array = {
             heading,
             description,
