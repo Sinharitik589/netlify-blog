@@ -13,9 +13,6 @@ mongoose.connect(uri, { useNewUrlParser: true }).catch((error) => {
 });
 
 const router = express.Router();
-require("./mongo/index");
-require("./routes/index")(router, app);
-
 var whitelist = ["http://127.0.0.1:5500", "https://sinharitik589.github.io"];
 
 var corsOptions = {
@@ -28,6 +25,8 @@ var corsOptions = {
   },
 };
 app.use(cors(corsOptions));
+require("./mongo/index");
+require("./routes/index")(router, app);
 
 app.use("/.netlify/functions/api", router);
 
