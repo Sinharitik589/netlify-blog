@@ -59,6 +59,7 @@ module.exports = (router, app) => {
             { user },
             process.env.ACCESS_TOKEN_SECRET
           );
+
           res.json(access_token);
         } else {
           res.sendStatus(403);
@@ -78,7 +79,14 @@ module.exports = (router, app) => {
       } else {
         var arr = docs.map((item) => {
           const { heading, description, category, imageUrl } = item;
-          let array = { heading, description, category, imageUrl };
+          let array = {
+            heading,
+            description,
+            category,
+            imageUrl,
+            username,
+            createdAt,
+          };
           return array;
         });
         console.log(arr);
@@ -183,6 +191,10 @@ module.exports = (router, app) => {
     });
   });
 
+  router.get("/user", authenticateUser, (req, res) => {
+    console.log(req.user);
+    res.json(req.user.user.username);
+  });
   router.post("/input", authenticateUser, (req, res) => {
     const {
       category,
