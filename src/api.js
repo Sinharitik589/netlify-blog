@@ -16,11 +16,7 @@ const router = express.Router();
 require("./mongo/index");
 require("./routes/index")(router, app);
 
-var corsOptions = {
-  origin: "https://sinharitik589.github.io/blog/index.html",
-  optionsSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use("/.netlify/functions/api", router);
 
