@@ -81,6 +81,7 @@ module.exports = (router, app) => {
           let array = { heading, description, category, imageUrl };
           return array;
         });
+        console.log(arr, "arrayyu");
         res.json(arr);
       }
     });
