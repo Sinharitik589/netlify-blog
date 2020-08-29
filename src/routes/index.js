@@ -97,8 +97,17 @@ module.exports = (router, app) => {
           };
           return array;
         });
-        console.log(arr);
-        res.json(arr);
+        Feature.find({}, (err, docs) => {
+          if (err) {
+            res.sendStatus(500);
+          } else {
+            featured = docs;
+            let object = { featured: featured[0].featured };
+
+            let array = { arr, object };
+            res.json(array);
+          }
+        });
       }
     });
   });

@@ -32,7 +32,7 @@ var corsOptions = {
     }
   },
 };
-app.use(cors(corsOptions));
+app.use(cors());
 require("./mongo/index");
 require("./routes/index")(router, app);
 
