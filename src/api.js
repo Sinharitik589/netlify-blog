@@ -16,10 +16,10 @@ mongoose.connect(uri, { useNewUrlParser: true }).catch((error) => {
   console.log(error, "error in mongoose");
 });
 
-const router = express.Router();
+/* const router = express.Router();
 var whitelist = ["http://127.0.0.1:5500", "https://sinharitik589.github.io"];
-
-var corsOptions = {
+ */
+/* var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
@@ -27,8 +27,8 @@ var corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-};
-app.use(cors(corsOptions));
+}; */
+app.use(cors({ origin: "https://sinharitik589.github.io" }));
 require("./mongo/index");
 require("./routes/index")(router, app);
 
