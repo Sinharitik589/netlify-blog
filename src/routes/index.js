@@ -102,7 +102,7 @@ module.exports = (router, app) => {
             res.sendStatus(500);
           } else {
             if (docs.length > 0) {
-              let object = { featured: featured[0].featured };
+              let object = { featured: docs[0].featured };
               let array = { arr, object };
               res.json(array);
             } else {

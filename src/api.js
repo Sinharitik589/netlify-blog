@@ -4,15 +4,9 @@ const cors = require("cors");
 const Serverless = require("serverless-http");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-var timeout = require("connect-timeout");
 
 const app = express();
-app.use(timeout(120000));
-app.use(haltOnTimedout);
 
-function haltOnTimedout(req, res, next) {
-  if (!req.timedout) next();
-}
 app.use(bodyParser.json());
 const uri =
   "mongodb+srv://sinharitik589:DbpX8lVDiZvMJmTC@cluster0.5zdkf.mongodb.net/blog?retryWrites=true&w=majority";
