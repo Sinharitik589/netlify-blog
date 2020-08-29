@@ -7,8 +7,12 @@ const mongoose = require("mongoose");
 var timeout = require("connect-timeout");
 
 const app = express();
+app.use(timeout(120000));
+app.use(haltOnTimedout);
 
-app.use(timeout("20s"));
+function haltOnTimedout(req, res, next) {
+  if (!req.timedout) next();
+}
 app.use(bodyParser.json());
 const uri =
   "mongodb+srv://sinharitik589:DbpX8lVDiZvMJmTC@cluster0.5zdkf.mongodb.net/blog?retryWrites=true&w=majority";
@@ -17,9 +21,9 @@ mongoose.connect(uri, { useNewUrlParser: true }).catch((error) => {
 });
 
 const router = express.Router();
-/*var whitelist = ["http://127.0.0.1:5500", "https://sinharitik589.github.io"];
- */
-/* var corsOptions = {
+var whitelist = ["http://127.0.0.1:5500", "https://sinharitik589.github.io"];
+
+var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
@@ -27,8 +31,8 @@ const router = express.Router();
       callback(new Error("Not allowed by CORS"));
     }
   },
-}; */
-app.use(cors({ origin: "https://sinharitik589.github.io" }));
+};
+app.use(cors(corsOptions));
 require("./mongo/index");
 require("./routes/index")(router, app);
 
