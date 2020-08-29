@@ -16,8 +16,8 @@ mongoose.connect(uri, { useNewUrlParser: true }).catch((error) => {
   console.log(error, "error in mongoose");
 });
 
-/* const router = express.Router();
-var whitelist = ["http://127.0.0.1:5500", "https://sinharitik589.github.io"];
+const router = express.Router();
+/*var whitelist = ["http://127.0.0.1:5500", "https://sinharitik589.github.io"];
  */
 /* var corsOptions = {
   origin: function (origin, callback) {
