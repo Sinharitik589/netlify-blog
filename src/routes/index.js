@@ -101,11 +101,14 @@ module.exports = (router, app) => {
           if (err) {
             res.sendStatus(500);
           } else {
-            featured = docs;
-            let object = { featured: featured[0].featured };
-
-            let array = { arr, object };
-            res.json(array);
+            if (docs.length > 0) {
+              let object = { featured: featured[0].featured };
+              let array = { arr, object };
+              res.json(array);
+            } else {
+              let array = { arr, featured: [] };
+              res.json(array);
+            }
           }
         });
       }
@@ -201,9 +204,14 @@ module.exports = (router, app) => {
       if (err) {
         res.sendStatus(500);
       } else {
-        featured = docs;
-        let object = { featured: featured[0].featured };
-        res.json(object);
+        console.log(docs.length, "docs");
+        if (docs.length > 0) {
+          featured = docs;
+          let object = { featured: featured[0].featured };
+          res.json(object);
+        } else {
+          res.json({ featured: [] });
+        }
       }
     });
   });
