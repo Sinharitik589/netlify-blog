@@ -119,7 +119,6 @@ module.exports = (router, app) => {
       if (err) {
         res.sendStatus(500);
       } else {
-        console.log(docs, "docs");
         res.json(docs);
       }
     });
