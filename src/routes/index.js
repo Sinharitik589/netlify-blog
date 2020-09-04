@@ -129,10 +129,12 @@ module.exports = (router, app) => {
       heading,
       imageUrl,
       description,
+      meta_description,
       subheading,
       tags,
       questions,
       urls,
+      meta_description,
     } = req.body;
     Blog.updateOne(
       { heading: `${req.query["blog"]}` },
@@ -141,10 +143,12 @@ module.exports = (router, app) => {
         heading,
         imageUrl,
         description,
+        meta_description,
         subheading,
         tags,
         questions,
         urls,
+        meta_description,
       },
       (err) => {
         if (err == null) {
@@ -223,6 +227,7 @@ module.exports = (router, app) => {
       category,
       heading,
       imageUrl,
+      meta_description,
       description,
       subheading,
       tags,
@@ -237,6 +242,7 @@ module.exports = (router, app) => {
       imageUrl,
       description,
       subheading,
+      meta_description,
       tags,
       questions,
       urls,

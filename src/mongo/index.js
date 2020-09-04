@@ -9,6 +9,7 @@ const blogSchema = new Schema(
     heading: String,
     imageUrl: String,
     description: String,
+    meta_description: String,
     subheading: Array,
     tags: Array,
     questions: Array,
