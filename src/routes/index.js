@@ -115,14 +115,27 @@ module.exports = (router, app) => {
   });
 
   router.get("/blog", (req, res) => {
-    Blog.find({ heading: `${req.query["heading"]}` }, (err, docs) => {
-      if (err) {
-        res.sendStatus(500);
-      } else {
-        res.json(docs);
-      }
-    });
+    console.log(req.query);
+    if (req.query["heading"]) {
+      Blog.find({ heading: `${req.query["heading"]}` }, (err, docs) => {
+        if (err) {
+          res.sendStatus(500);
+        } else {
+          res.json(docs);
+        }
+      });
+    } else {
+      Blog.find({ category: `${req.query["category"]}` }, (err, docs) => {
+        console.log(req.query["category"]);
+        if (err) {
+          res.sendStatus(500);
+        } else {
+          res.json(docs);
+        }
+      });
+    }
   });
+
   router.put("/blog", authenticateUser, async (req, res) => {
     const {
       category,
