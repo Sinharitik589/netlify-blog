@@ -14,6 +14,7 @@ const blogSchema = new Schema(
     tags: Array,
     questions: Array,
     urls: Array,
+    conclusion: String,
     createdAt: Number,
     updatedAt: Number,
   },

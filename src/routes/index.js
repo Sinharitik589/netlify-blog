@@ -147,6 +147,7 @@ module.exports = (router, app) => {
       tags,
       questions,
       urls,
+      conclusion,
     } = req.body;
     Blog.updateOne(
       { heading: `${req.query["blog"]}` },
@@ -160,6 +161,7 @@ module.exports = (router, app) => {
         tags,
         questions,
         urls,
+        conclusion,
       },
       (err) => {
         if (err == null) {
@@ -244,6 +246,7 @@ module.exports = (router, app) => {
       tags,
       questions,
       urls,
+      conclusion,
     } = req.body;
 
     new Blog({
@@ -257,6 +260,7 @@ module.exports = (router, app) => {
       tags,
       questions,
       urls,
+      conclusion,
     })
       .save()
       .then(() => {
