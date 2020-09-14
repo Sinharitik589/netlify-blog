@@ -81,7 +81,7 @@ module.exports = (router, app) => {
         var arr = docs.map((item) => {
           const {
             heading,
-            description,
+            meta_description,
             category,
             imageUrl,
             createdAt,
@@ -89,7 +89,7 @@ module.exports = (router, app) => {
           } = item;
           let array = {
             heading,
-            description,
+            description: meta_description,
             category,
             imageUrl,
             username,
