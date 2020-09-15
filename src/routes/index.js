@@ -89,7 +89,7 @@ module.exports = (router, app) => {
           } = item;
           let array = {
             heading,
-            description: meta_description,
+            meta_description,
             category,
             imageUrl,
             username,
