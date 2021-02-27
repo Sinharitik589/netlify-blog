@@ -138,6 +138,7 @@ module.exports = (router, app) => {
 
   router.put("/blog", authenticateUser, async (req, res) => {
     const {
+      username,
       category,
       heading,
       imageUrl,
@@ -152,6 +153,7 @@ module.exports = (router, app) => {
     Blog.updateOne(
       { heading: `${req.query["blog"]}` },
       {
+        username,
         category,
         heading,
         imageUrl,
@@ -238,6 +240,7 @@ module.exports = (router, app) => {
   router.post("/input", authenticateUser, (req, res) => {
     const {
       category,
+      username,
       heading,
       imageUrl,
       meta_description,
@@ -250,7 +253,7 @@ module.exports = (router, app) => {
     } = req.body;
 
     new Blog({
-      username: req.user.user.username,
+      username,
       category,
       heading,
       imageUrl,
