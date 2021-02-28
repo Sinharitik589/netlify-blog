@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 const uri =
   "mongodb+srv://sinharitik589:DbpX8lVDiZvMJmTC@cluster0.5zdkf.mongodb.net/blog?retryWrites=true&w=majority";
-mongoose.connect(uri, { useNewUrlParser: true }).catch((error) => {
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).catch((error) => {
   console.log(error, "error in mongoose");
 });
 

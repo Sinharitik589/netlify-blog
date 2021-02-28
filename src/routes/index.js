@@ -115,9 +115,8 @@ module.exports = (router, app) => {
   });
 
   router.get("/blog", (req, res) => {
-    console.log(req.query);
     if (req.query["heading"]) {
-      Blog.find({ heading: `${req.query["heading"]}` }, (err, docs) => {
+      Blog.find({ heading: `${decodeURIComponent(req.query["heading"])}` }, (err, docs) => {
         if (err) {
           res.sendStatus(500);
         } else {
