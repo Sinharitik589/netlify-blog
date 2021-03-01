@@ -73,47 +73,57 @@ module.exports = (router, app) => {
 
   //Route for content
   router.get("/", async (req, res) => {
-    console.log(req);
-    Blog.find({}, (err, docs) => {
-      if (err) {
-        res.sendStatus(500);
-      } else {
-        var arr = docs.map((item) => {
-          const {
-            heading,
-            _id,
-            meta_description,
-            category,
-            imageUrl,
-            createdAt,
-            username,
-          } = item;
-          let array = {
-            heading,
-            meta_description,
-            _id,
-            category,
-            imageUrl,
-            username,
-            createdAt,
-          };
-          return array;
-        });
-        Feature.find({}, (err, docs) => {
-          if (err) {
-            res.sendStatus(500);
-          } else {
-            if (docs.length > 0) {
-              let array = { arr, featured: docs[0].featured };
-              res.json(array);
+    try {
+
+      const arr = await Blog.find({}, "heading category imageUrl meta_description createdAt username");
+      const featured = await Feature.find({});
+      res.send({ arr: arr.reverse(), featured }).status(200);
+    }
+    catch (e) {
+      console.log(e);
+      res.sendStatus(500);
+    }
+
+    /*   Blog.find({}, (err, docs) => {
+        if (err) {
+          res.sendStatus(500);
+        } else {
+          var arr = docs.map((item) => {
+            const {
+              heading,
+              _id,
+              meta_description,
+              category,
+              imageUrl,
+              createdAt,
+              username,
+            } = item;
+            let array = {
+              heading,
+              meta_description,
+              _id,
+              category,
+              imageUrl,
+              username,
+              createdAt,
+            };
+            return array;
+          });
+          Feature.find({}, (err, docs) => {
+            if (err) {
+              res.sendStatus(500);
             } else {
-              let array = { arr, featured: [] };
-              res.json(array);
+              if (docs.length > 0) {
+                let array = { arr, featured: docs[0].featured };
+                res.json(array);
+              } else {
+                let array = { arr, featured: [] };
+                res.json(array);
+              }
             }
-          }
-        });
-      }
-    });
+          });
+        }
+      }); */
   });
 
   router.get("/blog", (req, res) => {
