@@ -81,6 +81,7 @@ module.exports = (router, app) => {
         var arr = docs.map((item) => {
           const {
             heading,
+            _id,
             meta_description,
             category,
             imageUrl,
@@ -90,6 +91,7 @@ module.exports = (router, app) => {
           let array = {
             heading,
             meta_description,
+            _id,
             category,
             imageUrl,
             username,
@@ -135,8 +137,21 @@ module.exports = (router, app) => {
     }
   });
 
+  router.get("/admin/blog", async (req, res) => {
+    const { id } = req.query;
+    try {
+      const blog = await Blog.findById(id);
+      res.send({ blog }).status(200);
+    }
+    catch (e) {
+
+      console.log(e);
+    }
+  })
+
   router.put("/blog", authenticateUser, async (req, res) => {
     const {
+      id,
       username,
       category,
       heading,
@@ -144,46 +159,39 @@ module.exports = (router, app) => {
       description,
       meta_description,
       subheading,
-      tags,
       questions,
       urls,
       conclusion,
     } = req.body;
-    Blog.updateOne(
-      { heading: `${req.query["blog"]}` },
-      {
-        username,
-        category,
-        heading,
-        imageUrl,
-        description,
-        meta_description,
-        subheading,
-        tags,
-        questions,
-        urls,
-        conclusion,
-      },
-      (err) => {
-        if (err == null) {
-          console.log(questions, subheading);
-          res.sendStatus(200);
-        } else {
-          res.sendStatus(404);
-        }
-      }
-    );
+    try {
+      const blog = await Blog.findById(id);
+      blog.username = username;
+      blog.category = category;
+      blog.heading = heading;
+      blog.imageUrl = imageUrl;
+      blog.description = description;
+      blog.meta_description = meta_description;
+      blog.subheading = subheading;
+      blog.questions = questions;
+      blog.conclusion = conclusion;
+      blog.urls = urls;
+      await blog.save();
+      res.sendStatus(200);
+    }
+    catch (e) {
+      res.sendStatus(500);
+    }
   });
-  router.get("/delete", authenticateUser, (req, res) => {
-    Blog.deleteOne({ heading: `${req.query["blog"]}` }, (err, docs) => {
-      if (err) {
-        console.log(err);
-        res.sendStatus(404);
-      } else {
-        console.log(docs);
-        res.sendStatus(200);
-      }
-    });
+  router.get("/delete", authenticateUser, async (req, res) => {
+    const { id } = req.query;
+    try {
+      await Blog.findByIdAndDelete(id);
+      res.sendStatus(200);
+    }
+    catch (e) {
+      console.log(e);
+      res.sendStatus(500)
+    }
   });
 
   router.post("/featured", authenticateUser, async (req, res) => {

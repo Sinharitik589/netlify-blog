@@ -15,7 +15,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).catch
 });
 
 const router = express.Router();
-var whitelist = ["http://127.0.0.1:5500", "https://sinharitik589.github.io"];
+var whitelist = ["http://127.0.0.1:5500", "https://sinharitik589.github.io", "http://localhost:3000"];
 
 var corsOptions = {
   origin: function (origin, callback) {
