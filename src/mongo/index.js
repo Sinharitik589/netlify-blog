@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 
 const blogSchema = new Schema(
   {
+    name: String,
     username: String,
     category: String,
     heading: String,

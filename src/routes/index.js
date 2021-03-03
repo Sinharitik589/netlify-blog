@@ -75,7 +75,7 @@ module.exports = (router, app) => {
   router.get("/", async (req, res) => {
     try {
 
-      const arr = await Blog.find({}, "heading category imageUrl meta_description createdAt username");
+      const arr = await Blog.find({}, "heading category imageUrl meta_description createdAt username name");
       const featured = await Feature.find({});
       res.send({ arr: arr.reverse(), featured }).status(200);
     }
@@ -128,7 +128,7 @@ module.exports = (router, app) => {
 
   router.get("/blog", (req, res) => {
     if (req.query["heading"]) {
-      Blog.find({ heading: `${decodeURIComponent(req.query["heading"])}` }, (err, docs) => {
+      Blog.find({ name: `${decodeURIComponent(req.query["heading"])}` }, (err, docs) => {
         if (err) {
           res.sendStatus(500);
         } else {
@@ -164,6 +164,7 @@ module.exports = (router, app) => {
       id,
       username,
       category,
+      name,
       heading,
       imageUrl,
       description,
@@ -185,6 +186,7 @@ module.exports = (router, app) => {
       blog.questions = questions;
       blog.conclusion = conclusion;
       blog.urls = urls;
+      blog.name = name;
       await blog.save();
       res.sendStatus(200);
     }
@@ -256,6 +258,7 @@ module.exports = (router, app) => {
   });
   router.post("/input", authenticateUser, (req, res) => {
     const {
+      name,
       category,
       username,
       heading,
