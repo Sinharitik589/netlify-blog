@@ -15,7 +15,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).catch
 });
 
 const router = express.Router();
-var whitelist = ["http://127.0.0.1:3000", "https://sinharitik589.github.io", "http://localhost:3000", "https://603da5459ab6b40008a76e75--gallant-panini-fbcf17.netlify.app/"];
+var whitelist = ["http://127.0.0.1:3000", "https://sinharitik589.github.io", "http://localhost:3000", "https://60434e9135964000077078ea--gallant-panini-fbcf17.netlify.app/"];
 
 var corsOptions = {
   origin: function (origin, callback) {
