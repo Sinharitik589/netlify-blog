@@ -284,6 +284,7 @@ module.exports = (router, app) => {
       questions,
       urls,
       conclusion,
+      name
     })
       .save()
       .then(() => {
