@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '500mb' }));
 const uri =
   "mongodb+srv://sinharitik589:DbpX8lVDiZvMJmTC@cluster0.5zdkf.mongodb.net/blog?retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).catch((error) => {
@@ -27,6 +27,7 @@ var corsOptions = {
   },
 };
 app.use(cors());
+
 
 require("./mongo/index");
 require("./routes/index")(router, app);

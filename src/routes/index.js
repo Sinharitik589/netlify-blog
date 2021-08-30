@@ -127,6 +127,7 @@ module.exports = (router, app) => {
   });
 
   router.get("/blog", (req, res) => {
+
     if (req.query["heading"]) {
       Blog.find({ name: `${decodeURIComponent(req.query["heading"])}` }, (err, docs) => {
         if (err) {
@@ -149,6 +150,7 @@ module.exports = (router, app) => {
 
   router.get("/admin/blog", async (req, res) => {
     const { id } = req.query;
+    console.log(id);
     try {
       const blog = await Blog.findById(id);
       res.send({ blog }).status(200);
@@ -156,6 +158,15 @@ module.exports = (router, app) => {
     catch (e) {
 
       console.log(e);
+    }
+  });
+  router.get("/admin/blog/name", async (req, res) => {
+    try {
+      const blog = await Blog.find({}, "name _id");
+      res.send({ blog }).status(200);
+    }
+    catch (e) {
+      res.sendStatus(500);
     }
   })
 
@@ -173,6 +184,7 @@ module.exports = (router, app) => {
       questions,
       urls,
       conclusion,
+      more
     } = req.body;
     try {
       const blog = await Blog.findById(id);
@@ -187,6 +199,7 @@ module.exports = (router, app) => {
       blog.conclusion = conclusion;
       blog.urls = urls;
       blog.name = name;
+      blog.more = more;
       await blog.save();
       res.sendStatus(200);
     }
